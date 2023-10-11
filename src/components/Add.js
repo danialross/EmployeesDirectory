@@ -56,8 +56,12 @@ function Add({ handleAdd }) {
   };
 
   return (
-    <div style={{ height: "5rem", width: "15rem" }}>
-      <Button variant="primary" onClick={handleShow}>
+    <>
+      <Button
+        variant="primary"
+        onClick={handleShow}
+        style={{ width: "12rem", height: "4rem" }}
+      >
         + Add New Employee
       </Button>
 
@@ -120,7 +124,7 @@ function Add({ handleAdd }) {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 }
 
