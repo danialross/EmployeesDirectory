@@ -3,11 +3,12 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-function Edit({ person, handleEditName, handleEditTitle }) {
-  const { name, title, index } = person;
+function Edit({ person, handleEditName, handleEditTitle, handleEditImage }) {
+  const { name, title, img, index } = person;
   const [show, setShow] = useState(false);
   const [newName, setNewName] = useState(name);
   const [newTitle, setNewTitle] = useState(title);
+  const [newImage, setNewImage] = useState(img);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -20,6 +21,10 @@ function Edit({ person, handleEditName, handleEditTitle }) {
     setNewTitle(e.target.value);
   };
 
+  const handleChangeImage = (e) => {
+    setNewImage(e.target.value);
+  };
+
   const handleClickConfirm = () => {
     if (newName !== "") {
       handleEditName(index, newName);
@@ -29,11 +34,12 @@ function Edit({ person, handleEditName, handleEditTitle }) {
       handleEditTitle(index, newTitle);
     }
 
+    if (newImage !== "") {
+      handleEditImage(index, newImage);
+    }
+
     handleClose();
   };
-
-  console.log(name, title, index, handleEditName, handleEditTitle);
-
   return (
     <div>
       <Button style={{ width: "5rem" }} variant="primary" onClick={handleShow}>
@@ -62,8 +68,17 @@ function Edit({ person, handleEditName, handleEditTitle }) {
 
             <Form.Label htmlFor="inputPassword5">Title</Form.Label>
             <Form.Control
+              className="mb-3"
               value={newTitle}
               onChange={handleChangeTitle}
+              type="text"
+              id="input"
+            />
+
+            <Form.Label htmlFor="inputPassword5">Image Url</Form.Label>
+            <Form.Control
+              value={newImage}
+              onChange={handleChangeImage}
               type="text"
               id="input"
             />

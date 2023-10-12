@@ -3,7 +3,13 @@ import Edit from "./Edit";
 import Delete from "./Delete";
 import Card from "react-bootstrap/Card";
 
-function Profile({ person, handleDelete, handleEditName, handleEditTitle }) {
+function Profile({
+  person,
+  handleDelete,
+  handleEditName,
+  handleEditTitle,
+  handleEditImage,
+}) {
   const { name, title, img, index } = person;
 
   return (
@@ -42,6 +48,7 @@ function Profile({ person, handleDelete, handleEditName, handleEditTitle }) {
             person={person}
             handleEditName={handleEditName}
             handleEditTitle={handleEditTitle}
+            handleEditImage={handleEditImage}
           />
           <Delete index={index} handleDelete={handleDelete} />
         </div>

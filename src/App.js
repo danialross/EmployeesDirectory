@@ -1,8 +1,9 @@
 import React from "react";
 import Profile from "./components/Profile";
-import { useState } from "react";
 import Add from "./components/Add";
 import Banner from "./components/Banner";
+import Search from "./components/Search";
+import { useState } from "react";
 
 function App() {
   const people = [
@@ -104,6 +105,17 @@ function App() {
     setDb(updatedPeople);
   };
 
+  const handleEditImage = (id, newImage) => {
+    const updatedPeople = people.map((person) => {
+      if (person.index === id) {
+        return { ...person, title: newImage };
+      }
+      return person; // Return unmodified objects
+    });
+
+    setDb(updatedPeople);
+  };
+
   const handleDelete = (id) => {
     const newDB = db.filter((item) => item.index !== id);
     setDb(newDB);
@@ -123,6 +135,7 @@ function App() {
   return (
     <>
       <Banner>Employees</Banner>
+      <Search database={db} />
       <div
         style={{
           display: "flex",
@@ -138,6 +151,7 @@ function App() {
               handleDelete={handleDelete}
               handleEditName={handleEditName}
               handleEditTitle={handleEditTitle}
+              handleEditImage={handleEditImage}
             />
           );
         })}
