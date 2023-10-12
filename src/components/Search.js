@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Navbar, Form } from "react-bootstrap";
 
-function Search({ database }) {
-  const [db, setDb] = useState(database);
+function Search({ originalDb, setter }) {
   let timer;
-
-  useEffect(() => {
-    setDb(database);
-  }, [database, setDb]);
 
   const handleChange = (e) => {
     clearTimeout(timer);
@@ -16,15 +11,15 @@ function Search({ database }) {
       const input = e.target.value;
 
       if (input === "") {
-        setDb(database);
+        setter(originalDb);
         return;
       }
 
-      const filteredArray = db.filter((obj) =>
+      const filteredArray = originalDb.filter((obj) =>
         obj.name.toLowerCase().includes(input.toLowerCase())
       );
 
-      setDb(filteredArray);
+      setter(filteredArray);
     }, 300);
   };
 

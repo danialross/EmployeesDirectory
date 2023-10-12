@@ -81,7 +81,11 @@ function App() {
     },
   ];
 
+  //for showing the display
   const [db, setDb] = useState(people);
+
+  //for the original so that search can revert back to the default
+  const [originalDb, setOriginalDb] = useState(people);
 
   const handleEditName = (id, newName) => {
     const updatedPeople = people.map((person) => {
@@ -92,6 +96,7 @@ function App() {
     });
 
     setDb(updatedPeople);
+    setOriginalDb(updatedPeople);
   };
 
   const handleEditTitle = (id, newTitle) => {
@@ -103,6 +108,7 @@ function App() {
     });
 
     setDb(updatedPeople);
+    setOriginalDb(updatedPeople);
   };
 
   const handleEditImage = (id, newImage) => {
@@ -114,11 +120,13 @@ function App() {
     });
 
     setDb(updatedPeople);
+    setOriginalDb(updatedPeople);
   };
 
   const handleDelete = (id) => {
-    const newDB = db.filter((item) => item.index !== id);
-    setDb(newDB);
+    const updatedPeople = db.filter((item) => item.index !== id);
+    setDb(updatedPeople);
+    setOriginalDb(updatedPeople);
   };
 
   const handleAdd = (name, title, img) => {
@@ -130,12 +138,13 @@ function App() {
     };
 
     setDb([...db, newEmployee]);
+    setOriginalDb([...db, newEmployee]);
   };
 
   return (
     <>
       <Banner>Employees</Banner>
-      <Search database={db} />
+      <Search originalDb={originalDb} setter={setDb} />
       <div
         style={{
           display: "flex",
