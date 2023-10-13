@@ -2,6 +2,7 @@ import React from "react";
 import Edit from "./Edit";
 import Delete from "./Delete";
 import Card from "react-bootstrap/Card";
+import styled from "styled-components";
 
 function Profile({
   person,
@@ -10,40 +11,38 @@ function Profile({
   handleEditTitle,
   handleEditImage,
 }) {
+  const StyledCard = styled(Card)`
+    width: 18rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    margin: 0.5rem;
+  `;
+
+  const StyledImage = styled(Card.Img)`
+    border-radius: 100000px;
+    width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+    text-align: center;
+  `;
+
+  const StyledDiv = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+  `;
+
   const { name, title, img, index } = person;
 
   return (
-    <Card
-      style={{
-        width: "18rem",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "1rem 2rem",
-        margin: "0.5rem",
-      }}
-    >
-      <Card.Img
-        variant="top"
-        src={img}
-        style={{
-          borderRadius: "100000px",
-          width: "10rem",
-          height: "10rem",
-          objectFit: "cover",
-          textAlign: "center",
-        }}
-      />
+    <StyledCard>
+      <StyledImage variant="top" src={img} />
       <Card.Body>
         <Card.Title style={{ textAlign: "center" }}>{name}</Card.Title>
         <Card.Text style={{ textAlign: "center" }}>{title}</Card.Text>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-evenly",
-            gap: "1rem",
-          }}
-        >
+        <StyledDiv>
           <Edit
             person={person}
             handleEditName={handleEditName}
@@ -51,9 +50,9 @@ function Profile({
             handleEditImage={handleEditImage}
           />
           <Delete index={index} handleDelete={handleDelete} />
-        </div>
+        </StyledDiv>
       </Card.Body>
-    </Card>
+    </StyledCard>
   );
 }
 

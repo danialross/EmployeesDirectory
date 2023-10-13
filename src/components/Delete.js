@@ -1,14 +1,15 @@
 import Button from "react-bootstrap/Button";
+import styled from "styled-components";
 
 function Delete({ handleDelete, index }) {
+  const StyledButton = styled(Button)`
+    width: 5rem;
+  `;
+
   return (
-    <Button
-      style={{ width: "5rem" }}
-      onClick={() => handleDelete(index)}
-      variant="outline-danger"
-    >
+    <StyledButton onClick={() => handleDelete(index)} variant="outline-danger">
       Delete
-    </Button>
+    </StyledButton>
   );
 }
 

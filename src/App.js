@@ -4,8 +4,17 @@ import Add from "./components/Add";
 import Banner from "./components/Banner";
 import Search from "./components/Search";
 import { useState } from "react";
+import styled from "styled-components";
 
 function App() {
+  //styling
+  const StyledDiv = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 1rem;
+  `;
+
   const people = [
     {
       name: "Alice",
@@ -84,7 +93,7 @@ function App() {
   //for showing the display
   const [db, setDb] = useState(people);
 
-  //for the original so that search can revert back to the default
+  //uneffected by searching to allow the changing of db then use originalDb to revert back
   const [originalDb, setOriginalDb] = useState(people);
 
   const handleEditName = (id, newName) => {
@@ -145,13 +154,7 @@ function App() {
     <>
       <Banner>Employees</Banner>
       <Search originalDb={originalDb} setter={setDb} />
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
+      <StyledDiv>
         {db.map((person) => {
           return (
             <Profile
@@ -164,17 +167,10 @@ function App() {
             />
           );
         })}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          paddingTop: "1rem",
-        }}
-      >
+      </StyledDiv>
+      <StyledDiv>
         <Add handleAdd={handleAdd}></Add>
-      </div>
+      </StyledDiv>
     </>
   );
 }

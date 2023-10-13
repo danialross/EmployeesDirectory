@@ -1,25 +1,26 @@
 import React from "react";
+import styled from "styled-components";
 
 const Banner = () => {
-  return (
-    <div
-      className="banner"
-      style={{
-        backgroundColor: "#0872fc",
-        width: "auto",
-        height: "200px",
+  const StyledDiv = styled.div`
+    background-color: #0872fc;
+    width: auto;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 4rem;
+    color: white;
+    padding-top: 3rem;
+    font-family:
+      Varela Round,
+      sans-serif;
+  `;
 
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
-        fontSize: "4rem",
-        color: "white",
-        paddingTop: "3rem",
-        fontFamily: "Varela Round, sans-serif",
-      }}
-    >
+  return (
+    <StyledDiv>
       <b>Employees</b>
-    </div>
+    </StyledDiv>
   );
 };
 

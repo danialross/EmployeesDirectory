@@ -2,8 +2,22 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import styled from "styled-components";
 
 function Add({ handleAdd }) {
+  const StyledButton = styled(Button)`
+    width: 12rem;
+    height: 4rem;
+  `;
+
+  const DivWithMargin = styled.div`
+    margin-bottom: 1rem;
+  `;
+
+  const WarningText = styled(Form.Text)`
+    color: red;
+  `;
+
   const [show, setShow] = useState(false);
   const [isNameInvalid, setIsNameInvalid] = useState(false);
   const [isTitleInvalid, setIsTitleInvalid] = useState(false);
@@ -57,13 +71,9 @@ function Add({ handleAdd }) {
 
   return (
     <>
-      <Button
-        variant="primary"
-        onClick={handleShow}
-        style={{ width: "12rem", height: "4rem" }}
-      >
+      <StyledButton variant="primary" onClick={handleShow}>
         + Add New Employee
-      </Button>
+      </StyledButton>
 
       <Modal
         show={show}
@@ -75,22 +85,22 @@ function Add({ handleAdd }) {
           <Modal.Title>Add Employee</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="mb-3">
-            <Form.Label htmlFor="inputPassword5">Name</Form.Label>
+          <DivWithMargin>
+            <Form.Label htmlFor="name">Name</Form.Label>
             <Form.Control
-              style={{ borderColor: isNameInvalid ? "red" : "" }}
+              style={{
+                borderColor: isNameInvalid ? "red" : "",
+              }}
               value={newName}
               onChange={handleChangeName}
               type="text"
               id="input"
             />
-            {isNameInvalid ? (
-              <Form.Text style={{ color: "red" }}>Required</Form.Text>
-            ) : null}
-          </div>
+            {isNameInvalid ? <WarningText>Required</WarningText> : null}
+          </DivWithMargin>
 
-          <div className="mb-3">
-            <Form.Label htmlFor="inputPassword5">Title</Form.Label>
+          <DivWithMargin>
+            <Form.Label htmlFor="title">Title</Form.Label>
             <Form.Control
               style={{ borderColor: isTitleInvalid ? "red" : "" }}
               value={newTitle}
@@ -98,12 +108,10 @@ function Add({ handleAdd }) {
               type="text"
               id="input"
             />
-            {isTitleInvalid ? (
-              <Form.Text style={{ color: "red" }}>Required</Form.Text>
-            ) : null}
-          </div>
+            {isTitleInvalid ? <WarningText>Required</WarningText> : null}
+          </DivWithMargin>
 
-          <div className="mb-3">
+          <DivWithMargin>
             <Form.Label htmlFor="inputPassword5">
               Image URL (Optional)
             </Form.Label>
@@ -113,7 +121,7 @@ function Add({ handleAdd }) {
               type="text"
               id="input"
             />
-          </div>
+          </DivWithMargin>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

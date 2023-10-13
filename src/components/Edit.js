@@ -2,8 +2,21 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import styled from "styled-components";
 
 function Edit({ person, handleEditName, handleEditTitle, handleEditImage }) {
+  const StyledForm = styled(Form.Control)`
+    margin-bottom: 1rem;
+  `;
+
+  const StyledButton = styled(Button)`
+    width: 5rem;
+  `;
+
+  const ButtonWithMargin = styled(Button)`
+    margin-right: 1rem;
+  `;
+
   const { name, title, img, index } = person;
   const [show, setShow] = useState(false);
   const [newName, setNewName] = useState(name);
@@ -42,9 +55,9 @@ function Edit({ person, handleEditName, handleEditTitle, handleEditImage }) {
   };
   return (
     <div>
-      <Button style={{ width: "5rem" }} variant="primary" onClick={handleShow}>
+      <StyledButton variant="primary" onClick={handleShow}>
         Edit
-      </Button>
+      </StyledButton>
 
       <Modal
         show={show}
@@ -57,26 +70,24 @@ function Edit({ person, handleEditName, handleEditTitle, handleEditImage }) {
         </Modal.Header>
         <Modal.Body>
           <div>
-            <Form.Label htmlFor="inputPassword5">Name</Form.Label>
-            <Form.Control
-              className="mb-3"
+            <Form.Label htmlFor="name">Name</Form.Label>
+            <StyledForm
               value={newName}
               onChange={handleChangeName}
               type="text"
               id="input"
             />
 
-            <Form.Label htmlFor="inputPassword5">Title</Form.Label>
-            <Form.Control
-              className="mb-3"
+            <Form.Label htmlFor="title">Title</Form.Label>
+            <StyledForm
               value={newTitle}
               onChange={handleChangeTitle}
               type="text"
               id="input"
             />
 
-            <Form.Label htmlFor="inputPassword5">Image Url</Form.Label>
-            <Form.Control
+            <Form.Label htmlFor="url">Image Url</Form.Label>
+            <StyledForm
               value={newImage}
               onChange={handleChangeImage}
               type="text"
@@ -85,9 +96,9 @@ function Edit({ person, handleEditName, handleEditTitle, handleEditImage }) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <ButtonWithMargin variant="secondary" onClick={handleClose}>
             Close
-          </Button>
+          </ButtonWithMargin>
           <Button variant="primary" onClick={handleClickConfirm}>
             Confirm
           </Button>
