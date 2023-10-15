@@ -2,24 +2,24 @@ import React from "react";
 import { Navbar, Form } from "react-bootstrap";
 import styled from "styled-components";
 
+const StyledNav = styled(Navbar)`
+  padding-left: 3rem;
+  padding-right: 3rem;
+  display: flex;
+  background: white;
+`;
+
+const StyledForm = styled(Form.Control)`
+  font-family:
+    Varela Round,
+    sans-serif;
+  width: 18rem;
+  margin-left: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 function Search({ originalDb, setter }) {
-  const StyledNav = styled(Navbar)`
-    padding-left: 3rem;
-    padding-right: 3rem;
-    display: flex;
-    background: white;
-  `;
-
-  const StyledForm = styled(Form.Control)`
-    font-family:
-      Varela Round,
-      sans-serif;
-    width: 18rem;
-    margin-left: 5rem;
-    display: flex;
-    flex-wrap: wrap;
-  `;
-
   let timer;
 
   const handleChange = (e) => {
@@ -52,7 +52,7 @@ function Search({ originalDb, setter }) {
       <Form inline>
         <StyledForm
           type="text"
-          placeholder="Look for Employees by Name"
+          placeholder="Search by Name"
           onChange={handleChange}
           onKeyDown={disableEnter}
         />

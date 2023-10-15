@@ -6,15 +6,15 @@ import Search from "./components/Search";
 import { useState } from "react";
 import styled from "styled-components";
 
-function App() {
-  //styling
-  const StyledDiv = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding-bottom: 1rem;
-  `;
+//styling
+const StyledDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 1rem;
+`;
 
+function App() {
   const people = [
     {
       name: "Alice",
@@ -123,7 +123,7 @@ function App() {
   const handleEditImage = (id, newImage) => {
     const updatedPeople = people.map((person) => {
       if (person.index === id) {
-        return { ...person, title: newImage };
+        return { ...person, img: newImage };
       }
       return person; // Return unmodified objects
     });

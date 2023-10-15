@@ -4,19 +4,19 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 
+const StyledForm = styled(Form.Control)`
+  margin-bottom: 1rem;
+`;
+
+const StyledButton = styled(Button)`
+  width: 5rem;
+`;
+
+const ButtonWithMargin = styled(Button)`
+  margin-right: 1rem;
+`;
+
 function Edit({ person, handleEditName, handleEditTitle, handleEditImage }) {
-  const StyledForm = styled(Form.Control)`
-    margin-bottom: 1rem;
-  `;
-
-  const StyledButton = styled(Button)`
-    width: 5rem;
-  `;
-
-  const ButtonWithMargin = styled(Button)`
-    margin-right: 1rem;
-  `;
-
   const { name, title, img, index } = person;
   const [show, setShow] = useState(false);
   const [newName, setNewName] = useState(name);

@@ -4,20 +4,20 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 
+const StyledButton = styled(Button)`
+  width: 12rem;
+  height: 4rem;
+`;
+
+const DivWithMargin = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const WarningText = styled(Form.Text)`
+  color: red;
+`;
+
 function Add({ handleAdd }) {
-  const StyledButton = styled(Button)`
-    width: 12rem;
-    height: 4rem;
-  `;
-
-  const DivWithMargin = styled.div`
-    margin-bottom: 1rem;
-  `;
-
-  const WarningText = styled(Form.Text)`
-    color: red;
-  `;
-
   const [show, setShow] = useState(false);
   const [isNameInvalid, setIsNameInvalid] = useState(false);
   const [isTitleInvalid, setIsTitleInvalid] = useState(false);
@@ -56,6 +56,10 @@ function Add({ handleAdd }) {
     if (newTitle === "" || newName === "") {
       return;
     }
+
+    const capitalizedFirst =
+      newName.charAt(0).toUpperCase + newName.substring(1);
+    console.log(capitalizedFirst);
 
     if (newPicture === "") {
       const noPicUrl =
