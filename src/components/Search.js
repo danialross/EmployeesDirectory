@@ -33,8 +33,10 @@ function Search({ originalDb, setter }) {
         return;
       }
 
-      const filteredArray = originalDb.filter((obj) =>
-        obj.name.toLowerCase().includes(input.toLowerCase())
+      const filteredArray = originalDb.filter(
+        (obj) =>
+          obj.name.toLowerCase().includes(input.toLowerCase()) ||
+          obj.title.toLowerCase().includes(input.toLowerCase())
       );
 
       setter(filteredArray);
@@ -52,7 +54,7 @@ function Search({ originalDb, setter }) {
       <Form inline>
         <StyledForm
           type="text"
-          placeholder="Search by Name"
+          placeholder="Search by Name or Title"
           onChange={handleChange}
           onKeyDown={disableEnter}
         />
