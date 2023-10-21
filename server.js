@@ -1,7 +1,11 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const PORT = 3001;
+
+app.use(express.json());
+app.use(express.urlencoded());
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -10,8 +14,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get("/api/data", (req, res) => {
-  const people = [
+app.get("/api/employees", (req, res) => {
+  const employees = [
     {
       name: "Alice",
       title: "Software Developer",
@@ -86,9 +90,24 @@ app.get("/api/data", (req, res) => {
     },
   ];
 
-  res.send(people);
+  res.send(employees);
+});
+
+app.post("/api/employees", (req, res) => {
+  console.log(req.body);
+  res.send(req.body);
 });
 
 app.listen(PORT, () => {
   console.log("Server is Listening on port " + PORT);
 });
+
+// const start = async () => {
+//   await mongoose.connect("");
+
+//   app.listen(PORT, () => {
+//     console.log("Server is Listening on port " + PORT);
+//   });
+// };
+
+// start();
