@@ -1,113 +1,48 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const Employees = require("./models/employees");
 const app = express();
 const PORT = 3001;
-
-app.use(express.json());
-app.use(express.urlencoded());
+mongoose.set("strictQuery", false);
 
 const corsOptions = {
   origin: "http://localhost:3000",
-  optionsSuccessStatus: 200,
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 app.use(cors(corsOptions));
 
-app.get("/api/employees", (req, res) => {
-  const employees = [
-    {
-      name: "Alice",
-      title: "Software Developer",
-      img: "https://images.pexels.com/photos/2169434/pexels-photo-2169434.jpeg",
-      index: 0,
-    },
-    {
-      name: "Bob",
-      title: "Graphic Designer",
-      img: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg",
-      index: 1,
-    },
-    {
-      name: "Frank",
-      title: "Data Analyst",
-      img: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg",
-      index: 2,
-    },
-    {
-      name: "Susan",
-      title: "Product Manager",
-      img: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg",
-      index: 3,
-    },
-    {
-      name: "Eva",
-      title: "Web Developer",
-      img: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg",
-      index: 4,
-    },
-    {
-      name: "Charlie",
-      title: "UI/UX Designer",
-      img: "https://images.pexels.com/photos/773371/pexels-photo-773371.jpeg",
-      index: 5,
-    },
-    {
-      name: "Grace",
-      title: "Marketing Specialist",
-      img: "https://images.pexels.com/photos/2104252/pexels-photo-2104252.jpeg",
-      index: 6,
-    },
-    {
-      name: "Henry",
-      title: "System Administrator",
-      img: "https://images.pexels.com/photos/3799786/pexels-photo-3799786.jpeg",
-      index: 7,
-    },
-    {
-      name: "Irene",
-      title: "Content Writer",
-      img: "https://images.pexels.com/photos/2083751/pexels-photo-2083751.jpeg",
-      index: 8,
-    },
-    {
-      name: "Lynn",
-      title: "Data Analyst",
-      img: "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg",
-      index: 9,
-    },
-    {
-      name: "Perry",
-      title: "CFO",
-      img: "https://images.pexels.com/photos/4120661/pexels-photo-4120661.jpeg",
-      index: 10,
-    },
-    {
-      name: "Gerome",
-      title: "Technical Support",
-      img: "https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg",
-      index: 11,
-    },
-  ];
+app.use(express.json());
+app.use(express.urlencoded());
 
+app.get("/api/employees", async (req, res) => {
+  const employees = await Employees.find();
+  console.log("Database sent");
   res.send(employees);
 });
 
-app.post("/api/employees", (req, res) => {
+app.post("/api/employees", async (req, res) => {
   console.log(req.body);
   res.send(req.body);
 });
 
-app.listen(PORT, () => {
-  console.log("Server is Listening on port " + PORT);
-});
+// app.listen(PORT, () => {
+//   console.log("Server is Listening on port " + PORT);
+// });
 
-// const start = async () => {
-//   await mongoose.connect("");
+const start = async () => {
+  try {
+    await mongoose.connect(
+      "mongodb+srv://danialross:RdWHiYhyPuisb8us@employees.l1ghc80.mongodb.net/Employees?retryWrites=true&w=majority"
+    );
 
-//   app.listen(PORT, () => {
-//     console.log("Server is Listening on port " + PORT);
-//   });
-// };
+    app.listen(PORT, () => {
+      console.log("Server is Listening on port " + PORT);
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
 
-// start();
+start();

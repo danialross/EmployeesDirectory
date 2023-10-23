@@ -19,9 +19,12 @@ function App() {
   const [db, setDb] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/people")
+    fetch("http://localhost:3001/api/employees")
       .then((response) => response.json())
-      .then((data) => setDb(data))
+      .then((data) => {
+        setDb(data);
+        console.log(db);
+      })
       .catch((error) => console.error("Error:", error));
   }, []);
 
