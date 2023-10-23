@@ -18,7 +18,7 @@ function App() {
   //for showing the display
   const [db, setDb] = useState(null);
 
-  useEffect(() => {
+  const retrieveDb = () => {
     fetch("http://localhost:3001/api/employees")
       .then((response) => response.json())
       .then((data) => {
@@ -26,6 +26,10 @@ function App() {
         console.log(db);
       })
       .catch((error) => console.error("Error:", error));
+  };
+
+  useEffect(() => {
+    retrieveDb();
   }, []);
 
   console.log(db);
@@ -96,7 +100,7 @@ function App() {
           ? db.map((person) => {
               return (
                 <Profile
-                  key={person.index}
+                  key={person._id}
                   person={person}
                   handleDelete={handleDelete}
                   handleEditName={handleEditName}

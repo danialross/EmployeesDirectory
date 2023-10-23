@@ -5,9 +5,9 @@ const StyledButton = styled(Button)`
   width: 5rem;
 `;
 
-function Delete({ handleDelete, index }) {
+function Delete({ handleDelete, _id }) {
   return (
-    <StyledButton onClick={() => handleDelete(index)} variant="outline-danger">
+    <StyledButton onClick={() => handleDelete(_id)} variant="outline-danger">
       Delete
     </StyledButton>
   );

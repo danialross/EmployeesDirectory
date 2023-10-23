@@ -34,7 +34,7 @@ function Profile({
   handleEditTitle,
   handleEditImage,
 }) {
-  const { name, title, img, index } = person;
+  const { name, title, img, _id } = person;
 
   return (
     <StyledCard>
@@ -49,7 +49,7 @@ function Profile({
             handleEditTitle={handleEditTitle}
             handleEditImage={handleEditImage}
           />
-          <Delete index={index} handleDelete={handleDelete} />
+          <Delete index={_id} handleDelete={handleDelete} />
         </StyledDiv>
       </Card.Body>
     </StyledCard>
