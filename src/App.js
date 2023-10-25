@@ -17,6 +17,8 @@ const StyledDiv = styled.div`
 function App() {
   //for showing the display
   const [db, setDb] = useState(null);
+  //uneffected by searching to allow the changing of db then use originalDb to revert back
+  const [originalDb, setOriginalDb] = useState(db);
 
   const retrieveDb = () => {
     fetch("http://localhost:3001/api/employees")
@@ -32,64 +34,59 @@ function App() {
     retrieveDb();
   }, []);
 
-  console.log(db);
+  // const handleEditName = (id, newName) => {
+  //   const updatedPeople = db.map((person) => {
+  //     if (person.index === id) {
+  //       return { ...person, name: newName };
+  //     }
+  //     return person; // Return unmodified objects
+  //   });
 
-  //uneffected by searching to allow the changing of db then use originalDb to revert back
-  const [originalDb, setOriginalDb] = useState(db);
+  //   setDb(updatedPeople);
+  //   setOriginalDb(updatedPeople);
+  // };
 
-  const handleEditName = (id, newName) => {
-    const updatedPeople = db.map((person) => {
-      if (person.index === id) {
-        return { ...person, name: newName };
-      }
-      return person; // Return unmodified objects
-    });
+  // const handleEditTitle = (id, newTitle) => {
+  //   const updatedPeople = db.map((person) => {
+  //     if (person.index === id) {
+  //       return { ...person, title: newTitle };
+  //     }
+  //     return person; // Return unmodified objects
+  //   });
 
-    setDb(updatedPeople);
-    setOriginalDb(updatedPeople);
-  };
+  //   setDb(updatedPeople);
+  //   setOriginalDb(updatedPeople);
+  // };
 
-  const handleEditTitle = (id, newTitle) => {
-    const updatedPeople = db.map((person) => {
-      if (person.index === id) {
-        return { ...person, title: newTitle };
-      }
-      return person; // Return unmodified objects
-    });
+  // const handleEditImage = (id, newImage) => {
+  //   const updatedPeople = db.map((person) => {
+  //     if (person.index === id) {
+  //       return { ...person, img: newImage };
+  //     }
+  //     return person; // Return unmodified objects
+  //   });
 
-    setDb(updatedPeople);
-    setOriginalDb(updatedPeople);
-  };
+  //   setDb(updatedPeople);
+  //   setOriginalDb(updatedPeople);
+  // };
 
-  const handleEditImage = (id, newImage) => {
-    const updatedPeople = db.map((person) => {
-      if (person.index === id) {
-        return { ...person, img: newImage };
-      }
-      return person; // Return unmodified objects
-    });
+  // const handleDelete = (id) => {
+  //   const updatedPeople = db.filter((item) => item.index !== id);
+  //   setDb(updatedPeople);
+  //   setOriginalDb(updatedPeople);
+  // };
 
-    setDb(updatedPeople);
-    setOriginalDb(updatedPeople);
-  };
+  // const handleAdd = (name, title, img) => {
+  //   const newEmployee = {
+  //     name: name,
+  //     title: title,
+  //     img: img,
+  //     index: db.length,
+  //   };
 
-  const handleDelete = (id) => {
-    const updatedPeople = db.filter((item) => item.index !== id);
-    setDb(updatedPeople);
-    setOriginalDb(updatedPeople);
-  };
-
-  const handleAdd = (name, title, img) => {
-    const newEmployee = {
-      name: name,
-      title: title,
-      img: img,
-      index: db.length,
-    };
-
-    setDb([...db, newEmployee]);
-    setOriginalDb([...db, newEmployee]);
-  };
+  //   setDb([...db, newEmployee]);
+  //   setOriginalDb([...db, newEmployee]);
+  // };
 
   return (
     <>
@@ -98,21 +95,12 @@ function App() {
       <StyledDiv>
         {db !== null
           ? db.map((person) => {
-              return (
-                <Profile
-                  key={person._id}
-                  person={person}
-                  handleDelete={handleDelete}
-                  handleEditName={handleEditName}
-                  handleEditTitle={handleEditTitle}
-                  handleEditImage={handleEditImage}
-                />
-              );
+              return <Profile key={person._id} person={person} />;
             })
           : null}
       </StyledDiv>
       <StyledDiv>
-        <Add handleAdd={handleAdd}></Add>
+        <Add />
       </StyledDiv>
     </>
   );
