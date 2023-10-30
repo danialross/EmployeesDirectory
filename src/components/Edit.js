@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
+import axios from "axios";
 
 const StyledForm = styled(Form.Control)`
   margin-bottom: 1rem;
@@ -16,8 +17,8 @@ const ButtonWithMargin = styled(Button)`
   margin-right: 1rem;
 `;
 
-function Edit({ person, handleEditName, handleEditTitle, handleEditImage }) {
-  const { name, title, img, index } = person;
+function Edit({ person, refreshDatabase }) {
+  const { name, title, img, _id } = person;
   const [show, setShow] = useState(false);
   const [newName, setNewName] = useState(name);
   const [newTitle, setNewTitle] = useState(title);
@@ -38,21 +39,40 @@ function Edit({ person, handleEditName, handleEditTitle, handleEditImage }) {
     setNewImage(e.target.value);
   };
 
-  const handleClickConfirm = () => {
-    if (newName !== "") {
-      handleEditName(index, newName);
-    }
+  const sendChangeRequest = () => {
+    const changedPerson = {
+      _id: _id,
+      name: newName,
+      title: newTitle,
+      img: newImage,
+    };
 
-    if (newTitle !== "") {
-      handleEditTitle(index, newTitle);
-    }
-
-    if (newImage !== "") {
-      handleEditImage(index, newImage);
-    }
-
-    handleClose();
+    axios
+      .put("http://localhost:3001/api/employees/" + _id, changedPerson)
+      .then(() => {
+        console.log("User successfully updated");
+      })
+      .catch((error) => console.error("Error:", error));
   };
+
+  const handleClickConfirm = () => {
+    if (newName === "") {
+      return;
+    }
+
+    if (newTitle === "") {
+      return;
+    }
+
+    if (newImage === "") {
+      return;
+    }
+
+    sendChangeRequest();
+    handleClose();
+    refreshDatabase();
+  };
+
   return (
     <div>
       <StyledButton variant="primary" onClick={handleShow}>

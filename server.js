@@ -30,7 +30,7 @@ app.get("/api/employees/:id", async (req, res) => {
     if (result) {
       res.send(result);
     } else if (!result) {
-      res.send("Employee does not exist");
+      res.status(404).send("Employee does not exist");
     }
     console.log({ Employee: result });
   } catch (e) {

@@ -5,6 +5,7 @@ import Banner from "./components/Banner";
 import Search from "./components/Search";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 //styling
 const StyledDiv = styled.div`
@@ -20,73 +21,18 @@ function App() {
   //uneffected by searching to allow the changing of db then use originalDb to revert back
   const [originalDb, setOriginalDb] = useState(db);
 
-  const retrieveDb = () => {
-    fetch("http://localhost:3001/api/employees")
-      .then((response) => response.json())
-      .then((data) => {
-        setDb(data);
-        console.log(db);
+  const refreshDatabase = () => {
+    axios
+      .get("http://localhost:3001/api/employees")
+      .then((response) => {
+        setDb(response.data);
       })
       .catch((error) => console.error("Error:", error));
   };
 
   useEffect(() => {
-    retrieveDb();
+    refreshDatabase();
   }, []);
-
-  // const handleEditName = (id, newName) => {
-  //   const updatedPeople = db.map((person) => {
-  //     if (person.index === id) {
-  //       return { ...person, name: newName };
-  //     }
-  //     return person; // Return unmodified objects
-  //   });
-
-  //   setDb(updatedPeople);
-  //   setOriginalDb(updatedPeople);
-  // };
-
-  // const handleEditTitle = (id, newTitle) => {
-  //   const updatedPeople = db.map((person) => {
-  //     if (person.index === id) {
-  //       return { ...person, title: newTitle };
-  //     }
-  //     return person; // Return unmodified objects
-  //   });
-
-  //   setDb(updatedPeople);
-  //   setOriginalDb(updatedPeople);
-  // };
-
-  // const handleEditImage = (id, newImage) => {
-  //   const updatedPeople = db.map((person) => {
-  //     if (person.index === id) {
-  //       return { ...person, img: newImage };
-  //     }
-  //     return person; // Return unmodified objects
-  //   });
-
-  //   setDb(updatedPeople);
-  //   setOriginalDb(updatedPeople);
-  // };
-
-  // const handleDelete = (id) => {
-  //   const updatedPeople = db.filter((item) => item.index !== id);
-  //   setDb(updatedPeople);
-  //   setOriginalDb(updatedPeople);
-  // };
-
-  // const handleAdd = (name, title, img) => {
-  //   const newEmployee = {
-  //     name: name,
-  //     title: title,
-  //     img: img,
-  //     index: db.length,
-  //   };
-
-  //   setDb([...db, newEmployee]);
-  //   setOriginalDb([...db, newEmployee]);
-  // };
 
   return (
     <>
@@ -95,12 +41,18 @@ function App() {
       <StyledDiv>
         {db !== null
           ? db.map((person) => {
-              return <Profile key={person._id} person={person} />;
+              return (
+                <Profile
+                  key={person._id}
+                  person={person}
+                  refreshDatabase={refreshDatabase}
+                />
+              );
             })
           : null}
       </StyledDiv>
       <StyledDiv>
-        <Add />
+        <Add refreshDatabase={refreshDatabase} />
       </StyledDiv>
     </>
   );

@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
+import axios from "axios";
 
 const StyledButton = styled(Button)`
   width: 12rem;
@@ -17,7 +18,7 @@ const WarningText = styled(Form.Text)`
   color: red;
 `;
 
-function Add({ handleAdd }) {
+function Add({ refreshDatabase }) {
   const [show, setShow] = useState(false);
   const [isNameInvalid, setIsNameInvalid] = useState(false);
   const [isTitleInvalid, setIsTitleInvalid] = useState(false);
@@ -61,16 +62,29 @@ function Add({ handleAdd }) {
       newName.charAt(0).toUpperCase + newName.substring(1);
     console.log(capitalizedFirst);
 
-    if (newPicture === "") {
-      const noPicUrl =
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg";
-      handleAdd(newName, newTitle, noPicUrl);
-      handleClose();
-      return;
-    }
-
-    handleAdd(newName, newTitle, newPicture);
     handleClose();
+    sendAddRequest();
+    refreshDatabase();
+  };
+
+  const sendAddRequest = () => {
+    const newEmployee = {
+      name: newName,
+      title: newTitle,
+      img:
+        newPicture === ""
+          ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/542px-Unknown_person.jpg"
+          : newPicture,
+    };
+
+    axios
+      .post("http://localhost:3001/api/employees/", newEmployee)
+      .then((response) => {
+        console.log("Employee has been added:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
