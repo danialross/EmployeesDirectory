@@ -11,7 +11,7 @@ function Missing() {
     <StyledCard>
       <Card.Body>
         <Card.Title>No Employees Found.</Card.Title>
-        <Card.Text>No employees matches the name or title.</Card.Text>
+        <Card.Text>No employees matches that name or title.</Card.Text>
       </Card.Body>
     </StyledCard>
   );

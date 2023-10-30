@@ -43,8 +43,7 @@ function Search({ setter, refreshDatabase }) {
       axios
         .get("http://localhost:3001/api/search/" + input)
         .then((response) => {
-          console.log(response.data);
-          setInput();
+          console.log("search result : " + response.data);
           setter(response.data);
         })
         .catch((error) => console.error("Error:", error));
