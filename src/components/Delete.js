@@ -6,12 +6,13 @@ const StyledButton = styled(Button)`
   width: 5rem;
 `;
 
-function Delete({ _id }) {
+function Delete({ _id, refreshDatabase }) {
   const sendDeleteRequest = () => {
     axios
       .delete("http://localhost:3001/api/employees/" + _id)
       .then(() => {
         console.log("User " + _id + "has been deleted");
+        refreshDatabase();
       })
       .catch((error) => {
         console.error("Error:", error);

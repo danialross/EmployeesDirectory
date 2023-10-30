@@ -51,6 +51,7 @@ function Edit({ person, refreshDatabase }) {
       .put("http://localhost:3001/api/employees/" + _id, changedPerson)
       .then(() => {
         console.log("User successfully updated");
+        refreshDatabase();
       })
       .catch((error) => console.error("Error:", error));
   };
@@ -70,7 +71,6 @@ function Edit({ person, refreshDatabase }) {
 
     sendChangeRequest();
     handleClose();
-    refreshDatabase();
   };
 
   return (

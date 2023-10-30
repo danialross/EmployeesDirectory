@@ -6,6 +6,7 @@ import Search from "./components/Search";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import Missing from "./components/Missing";
 
 //styling
 const StyledDiv = styled.div`
@@ -17,9 +18,7 @@ const StyledDiv = styled.div`
 
 function App() {
   //for showing the display
-  const [db, setDb] = useState(null);
-  //uneffected by searching to allow the changing of db then use originalDb to revert back
-  const [originalDb, setOriginalDb] = useState(db);
+  const [db, setDb] = useState([]);
 
   const refreshDatabase = () => {
     axios
@@ -37,19 +36,21 @@ function App() {
   return (
     <>
       <Banner>Employees</Banner>
-      <Search originalDb={originalDb} setter={setDb} />
+      <Search setter={setDb} refreshDatabase={refreshDatabase} />
       <StyledDiv>
-        {db !== null
-          ? db.map((person) => {
-              return (
-                <Profile
-                  key={person._id}
-                  person={person}
-                  refreshDatabase={refreshDatabase}
-                />
-              );
-            })
-          : null}
+        {db.length !== 0 ? (
+          db.map((person) => {
+            return (
+              <Profile
+                key={person._id}
+                person={person}
+                refreshDatabase={refreshDatabase}
+              />
+            );
+          })
+        ) : (
+          <Missing />
+        )}
       </StyledDiv>
       <StyledDiv>
         <Add refreshDatabase={refreshDatabase} />

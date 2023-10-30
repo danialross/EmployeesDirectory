@@ -1,6 +1,7 @@
 import React from "react";
 import { Navbar, Form } from "react-bootstrap";
 import styled from "styled-components";
+import axios from "axios";
 
 const StyledNav = styled(Navbar)`
   padding-left: 3rem;
@@ -19,7 +20,7 @@ const StyledForm = styled(Form.Control)`
   flex-wrap: wrap;
 `;
 
-function Search({ originalDb, setter }) {
+function Search({ setter, refreshDatabase }) {
   let timer;
 
   const handleChange = (e) => {
@@ -28,18 +29,22 @@ function Search({ originalDb, setter }) {
     timer = setTimeout(() => {
       const input = e.target.value;
 
-      if (input === "") {
-        setter(originalDb);
-        return;
-      }
+      const searchDatabase = (input) => {
+        if (input === "") {
+          refreshDatabase();
+        } else {
+          axios
+            .get("http://localhost:3001/api/search/" + input)
+            .then((response) => {
+              console.log(response.data);
 
-      const filteredArray = originalDb.filter(
-        (obj) =>
-          obj.name.toLowerCase().includes(input.toLowerCase()) ||
-          obj.title.toLowerCase().includes(input.toLowerCase())
-      );
+              setter(response.data);
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+      };
 
-      setter(filteredArray);
+      searchDatabase(input);
     }, 300);
   };
 

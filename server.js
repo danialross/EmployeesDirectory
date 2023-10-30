@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Employees = require("./models/employees");
+const Employees = require("./src/models/employees");
 const cors = require("cors");
 const app = express();
 const PORT = 3001;
@@ -36,6 +36,23 @@ app.get("/api/employees/:id", async (req, res) => {
   } catch (e) {
     console.log(e.message);
     res.status(500).send({ error: e.message });
+  }
+});
+
+app.get("/api/search/:query", async (req, res) => {
+  const searchTerm = req.params.query;
+
+  try {
+    const employees = await Employees.find({
+      $or: [
+        { name: { $regex: searchTerm, $options: "i" } },
+        { title: { $regex: searchTerm, $options: "i" } },
+      ],
+    });
+    res.json(employees);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.message });
   }
 });
 
@@ -91,6 +108,8 @@ app.delete("/api/employees/:id", async (req, res) => {
     res.status(500).send({ error: e.message });
   }
 });
+
+app.get("");
 
 const start = async () => {
   try {

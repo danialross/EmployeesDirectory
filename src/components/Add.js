@@ -64,7 +64,6 @@ function Add({ refreshDatabase }) {
 
     handleClose();
     sendAddRequest();
-    refreshDatabase();
   };
 
   const sendAddRequest = () => {
@@ -81,6 +80,7 @@ function Add({ refreshDatabase }) {
       .post("http://localhost:3001/api/employees/", newEmployee)
       .then((response) => {
         console.log("Employee has been added:", response.data);
+        refreshDatabase();
       })
       .catch((error) => {
         console.error("Error:", error);
