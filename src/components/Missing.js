@@ -10,8 +10,8 @@ function Missing() {
   return (
     <StyledCard>
       <Card.Body>
-        <Card.Title>No Employee Found.</Card.Title>
-        <Card.Text>No Employee matches the name or title.</Card.Text>
+        <Card.Title>No Employees Found.</Card.Title>
+        <Card.Text>No employees matches the name or title.</Card.Text>
       </Card.Body>
     </StyledCard>
   );
