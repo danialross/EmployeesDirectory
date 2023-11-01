@@ -16,11 +16,14 @@ const StyledDiv = styled.div`
     sans-serif;
 `;
 
-const Banner = () => {
+const Banner = (props) => {
   return (
-    <StyledDiv>
-      <b>Employees</b>
-    </StyledDiv>
+    <>
+      <StyledDiv>
+        <b>Employees</b>
+      </StyledDiv>
+      {props.children}
+    </>
   );
 };
 

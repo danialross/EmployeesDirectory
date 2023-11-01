@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Profile from "./components/Profile";
 import Add from "./components/Add";
 import Banner from "./components/Banner";
-import Search from "./components/Search";
-import { useState, useEffect } from "react";
+import TopBar from "./components/TopBar";
 import styled from "styled-components";
 import axios from "axios";
 import Missing from "./components/Missing";
@@ -34,9 +33,8 @@ function App() {
   }, []);
 
   return (
-    <>
-      <Banner>Employees</Banner>
-      <Search setter={setDb} refreshDatabase={refreshDatabase} />
+    <Banner>
+      <TopBar setter={setDb} refreshDatabase={refreshDatabase} />
       <StyledDiv>
         {db.length !== 0 ? (
           db.map((person) => {
@@ -55,7 +53,7 @@ function App() {
       <StyledDiv>
         <Add refreshDatabase={refreshDatabase} />
       </StyledDiv>
-    </>
+    </Banner>
   );
 }
 
