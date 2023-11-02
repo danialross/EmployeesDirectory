@@ -37,7 +37,7 @@ function App() {
           path={routes[0].path}
           element={
             <Banner title={routes[0].title}>
-              <DirectoryPage routes={routes} />
+              <DirectoryPage routes={routes} currRoute={routes[0]} />
             </Banner>
           }
         />
@@ -45,7 +45,7 @@ function App() {
           path={routes[1].path}
           element={
             <Banner title={routes[1].title}>
-              <DirectoryPage routes={routes} />
+              <DirectoryPage routes={routes} currRoute={routes[1]} />
             </Banner>
           }
         />
@@ -53,7 +53,7 @@ function App() {
           path={routes[2].path}
           element={
             <Banner title={routes[2].title}>
-              <DirectoryPage routes={routes} />
+              <DirectoryPage routes={routes} currRoute={routes[2]} />
             </Banner>
           }
         />
@@ -61,7 +61,7 @@ function App() {
           path={routes[3].path}
           element={
             <Banner title={routes[3].title}>
-              <DirectoryPage routes={routes} />
+              <DirectoryPage routes={routes} currRoute={routes[3]} />
             </Banner>
           }
         />

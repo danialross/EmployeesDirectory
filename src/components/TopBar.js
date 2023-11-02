@@ -6,10 +6,9 @@ import {
   CloseButton,
   Button,
   Container,
-  NavLink,
 } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
 
 const StyledNav = styled(Navbar)`
   padding-left: 3rem;
@@ -41,45 +40,31 @@ const StyledCloseButton = styled(CloseButton)`
 const StyledButton = styled(Button)`
   margin-right: 0.5rem;
 `;
+
 const StyledLink = styled(NavLink)`
   font-size: 1rem;
   margin-right: 1rem;
+  color: black;
+  text-decoration: none;
   transition: border-radius ease;
+  padding: 0.5rem;
 
   &:hover {
     background-color: #f0f0f0;
-    border-radius: 20px;
+    border-radius: 1rem;
   }
 
   &.active {
-    text-decoration: underline;
+    background-color: #f0f0f0;
+    border-radius: 1rem;
   }
 `;
 
-function TopBar({ routes, setter, refreshDatabase }) {
+function TopBar({ routes, currRoute, searchDatabase }) {
   const [input, setInput] = useState("");
 
   const handleChange = (e) => {
     setInput(e.target.value);
-  };
-
-  const searchDatabase = (input) => {
-    if (input === "") {
-      refreshDatabase();
-    } else {
-      axios
-        .get("http://localhost:3001/api/search/" + input)
-        .then((response) => {
-          console.log("search result : " + response.data);
-          setter(response.data);
-        })
-        .catch((error) => console.error("Error:", error));
-    }
-  };
-
-  const handleReset = () => {
-    handleClear();
-    refreshDatabase();
   };
 
   const handleClear = () => {
@@ -88,7 +73,7 @@ function TopBar({ routes, setter, refreshDatabase }) {
 
   const enterPressed = (e) => {
     if (e.key === "Enter") {
-      searchDatabase(input);
+      searchDatabase(currRoute, input);
     }
   };
 
@@ -115,13 +100,18 @@ function TopBar({ routes, setter, refreshDatabase }) {
       <StyledCloseButton onClick={handleClear} />
       <StyledButton
         onClick={() => {
-          searchDatabase(input);
+          searchDatabase(currRoute, input);
         }}
         variant="primary"
       >
         Search
       </StyledButton>
-      <Button onClick={handleReset} variant="secondary">
+      <Button
+        onClick={() => {
+          searchDatabase(currRoute, input);
+        }}
+        variant="secondary"
+      >
         Reset
       </Button>
     </StyledNav>

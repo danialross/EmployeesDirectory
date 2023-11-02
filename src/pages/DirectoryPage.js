@@ -14,29 +14,56 @@ const StyledDiv = styled.div`
   padding-bottom: 1rem;
 `;
 
-function Home({ routes }) {
+function Home({ routes, currRoute }) {
   //for showing the display
   const [db, setDb] = useState([]);
 
-  const refreshDatabase = () => {
-    axios
-      .get("http://localhost:3001/api/employees")
-      .then((response) => {
-        setDb(response.data);
-      })
-      .catch((error) => console.error("Error:", error));
+  const searchDatabase = (currRoute, input) => {
+    if (currRoute === "") {
+      axios
+        .get("http://localhost:3001/api/employees/" + currRoute + input)
+        .then((response) => {
+          console.log("search result : " + response.data);
+          setDb(response.data);
+        })
+        .catch((error) => console.error("Error:", error));
+    } else if (currRoute === "/executives") {
+      axios
+        .get("http://localhost:3001/api/search/" + currRoute + input)
+        .then((response) => {
+          console.log("search result : " + response.data);
+          setDb(response.data);
+        })
+        .catch((error) => console.error("Error:", error));
+    } else if (currRoute === "/mids") {
+      axios
+        .get("http://localhost:3001/api/search/" + currRoute + input)
+        .then((response) => {
+          console.log("search result : " + response.data);
+          setDb(response.data);
+        })
+        .catch((error) => console.error("Error:", error));
+    } else if (currRoute === "/juniors") {
+      axios
+        .get("http://localhost:3001/api/search/" + currRoute + input)
+        .then((response) => {
+          console.log("search result : " + response.data);
+          setDb(response.data);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
   };
 
   useEffect(() => {
-    refreshDatabase();
+    searchDatabase();
   }, []);
 
   return (
     <>
       <TopBar
         routes={routes}
-        setter={setDb}
-        refreshDatabase={refreshDatabase}
+        searchDatabase={searchDatabase}
+        currRoute={currRoute}
       />
       <StyledDiv>
         {db.length !== 0 ? (
@@ -45,7 +72,7 @@ function Home({ routes }) {
               <Profile
                 key={person._id}
                 person={person}
-                refreshDatabase={refreshDatabase}
+                searchDatabase={searchDatabase}
               />
             );
           })
@@ -54,7 +81,7 @@ function Home({ routes }) {
         )}
       </StyledDiv>
       <StyledDiv>
-        <Add refreshDatabase={refreshDatabase} />
+        <Add searchDatabase={searchDatabase} />
       </StyledDiv>
     </>
   );

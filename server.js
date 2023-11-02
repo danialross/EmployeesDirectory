@@ -109,8 +109,6 @@ app.delete("/api/employees/:id", async (req, res) => {
   }
 });
 
-app.get("");
-
 const start = async () => {
   try {
     await mongoose.connect(
