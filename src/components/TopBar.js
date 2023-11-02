@@ -6,6 +6,7 @@ import {
   CloseButton,
   Button,
   Container,
+  NavLink,
 } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
@@ -28,6 +29,11 @@ const StyledForm = styled(Form.Control)`
   align-items: center;
 `;
 
+const StyledContainer = styled(Container)`
+  margin-right: auto;
+  margin-left: 0;
+`;
+
 const StyledCloseButton = styled(CloseButton)`
   margin-right: 1rem;
 `;
@@ -35,8 +41,22 @@ const StyledCloseButton = styled(CloseButton)`
 const StyledButton = styled(Button)`
   margin-right: 0.5rem;
 `;
+const StyledLink = styled(NavLink)`
+  font-size: 1rem;
+  margin-right: 1rem;
+  transition: border-radius ease;
 
-function TopBar({ setter, refreshDatabase }) {
+  &:hover {
+    background-color: #f0f0f0;
+    border-radius: 20px;
+  }
+
+  &.active {
+    text-decoration: underline;
+  }
+`;
+
+function TopBar({ routes, setter, refreshDatabase }) {
   const [input, setInput] = useState("");
 
   const handleChange = (e) => {
@@ -74,14 +94,17 @@ function TopBar({ setter, refreshDatabase }) {
 
   return (
     <StyledNav>
-      {/* <Container>
-        <Nav.Brand href="#">All Employees</Nav.Brand>
+      <StyledContainer>
         <Nav>
-          <Nav.Link href="#">Executives</Nav.Link>
-          <Nav.Link href="#">Mid </Nav.Link>
-          <Nav.Link href="#">Juniors</Nav.Link>
+          <StyledLink to={routes[0].path} exact>
+            {routes[0].title}
+          </StyledLink>
+          <StyledLink to={routes[1].path}>{routes[1].title}</StyledLink>
+          <StyledLink to={routes[2].path}>{routes[2].title}</StyledLink>
+          <StyledLink to={routes[3].path}>{routes[3].title}</StyledLink>
         </Nav>
-      </Container> */}
+      </StyledContainer>
+
       <StyledForm
         type="text"
         placeholder="Search by Name or Title"

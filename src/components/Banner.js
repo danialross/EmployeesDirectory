@@ -20,7 +20,7 @@ const Banner = (props) => {
   return (
     <>
       <StyledDiv>
-        <b>Employees</b>
+        <b>{props.title}</b>
       </StyledDiv>
       {props.children}
     </>
