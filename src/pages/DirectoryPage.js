@@ -19,33 +19,18 @@ function Home({ routes, currRoute }) {
   const [db, setDb] = useState([]);
 
   const searchDatabase = (currRoute, input) => {
-    if (currRoute === "") {
+    if (currRoute === "/") {
       axios
-        .get("http://localhost:3001/api/employees/" + currRoute + input)
+
+        .get("http://localhost:3001/api/employees")
         .then((response) => {
           console.log("search result : " + response.data);
           setDb(response.data);
         })
         .catch((error) => console.error("Error:", error));
-    } else if (currRoute === "/executives") {
+    } else {
       axios
-        .get("http://localhost:3001/api/search/" + currRoute + input)
-        .then((response) => {
-          console.log("search result : " + response.data);
-          setDb(response.data);
-        })
-        .catch((error) => console.error("Error:", error));
-    } else if (currRoute === "/mids") {
-      axios
-        .get("http://localhost:3001/api/search/" + currRoute + input)
-        .then((response) => {
-          console.log("search result : " + response.data);
-          setDb(response.data);
-        })
-        .catch((error) => console.error("Error:", error));
-    } else if (currRoute === "/juniors") {
-      axios
-        .get("http://localhost:3001/api/search/" + currRoute + input)
+        .get("http://localhost:3001/api/search" + currRoute + "/" + input)
         .then((response) => {
           console.log("search result : " + response.data);
           setDb(response.data);
@@ -73,6 +58,7 @@ function Home({ routes, currRoute }) {
                 key={person._id}
                 person={person}
                 searchDatabase={searchDatabase}
+                currRoute={currRoute}
               />
             );
           })
@@ -81,7 +67,7 @@ function Home({ routes, currRoute }) {
         )}
       </StyledDiv>
       <StyledDiv>
-        <Add searchDatabase={searchDatabase} />
+        <Add searchDatabase={searchDatabase} currRoute={currRoute} />
       </StyledDiv>
     </>
   );

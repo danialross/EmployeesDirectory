@@ -7,25 +7,21 @@ function App() {
   const routes = [
     {
       path: "/",
-      level: "all",
       title: "All Employees",
     },
 
     {
-      path: "/executives",
-      level: "executives",
+      path: "/executive",
       title: "Executives",
     },
 
     {
-      path: "/mids",
-      level: "mids",
+      path: "/mid",
       title: "Mid Managements",
     },
 
     {
-      path: "/juniors",
-      level: "juniors",
+      path: "/junior",
       title: "Juniors",
     },
   ];
@@ -37,7 +33,7 @@ function App() {
           path={routes[0].path}
           element={
             <Banner title={routes[0].title}>
-              <DirectoryPage routes={routes} currRoute={routes[0]} />
+              <DirectoryPage routes={routes} currRoute={routes[0].path} />
             </Banner>
           }
         />
@@ -45,7 +41,7 @@ function App() {
           path={routes[1].path}
           element={
             <Banner title={routes[1].title}>
-              <DirectoryPage routes={routes} currRoute={routes[1]} />
+              <DirectoryPage routes={routes} currRoute={routes[1].path} />
             </Banner>
           }
         />
@@ -53,7 +49,7 @@ function App() {
           path={routes[2].path}
           element={
             <Banner title={routes[2].title}>
-              <DirectoryPage routes={routes} currRoute={routes[2]} />
+              <DirectoryPage routes={routes} currRoute={routes[2].path} />
             </Banner>
           }
         />
@@ -61,7 +57,7 @@ function App() {
           path={routes[3].path}
           element={
             <Banner title={routes[3].title}>
-              <DirectoryPage routes={routes} currRoute={routes[3]} />
+              <DirectoryPage routes={routes} currRoute={routes[3].path} />
             </Banner>
           }
         />

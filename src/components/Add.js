@@ -16,7 +16,7 @@ const WarningText = styled(Form.Text)`
   color: red;
 `;
 
-function Add({ refreshDatabase }) {
+function Add({ searchDatabase, currRoute }) {
   const [show, setShow] = useState(false);
   const [isNameInvalid, setIsNameInvalid] = useState(false);
   const [isTitleInvalid, setIsTitleInvalid] = useState(false);
@@ -78,7 +78,7 @@ function Add({ refreshDatabase }) {
       .post("http://localhost:3001/api/employees/", newEmployee)
       .then((response) => {
         console.log("Employee has been added:", response.data);
-        refreshDatabase();
+        searchDatabase(currRoute, "");
       })
       .catch((error) => {
         console.error("Error:", error);

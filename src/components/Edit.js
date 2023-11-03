@@ -15,7 +15,7 @@ const ButtonWithMargin = styled(Button)`
   margin-right: 1rem;
 `;
 
-function Edit({ person, refreshDatabase }) {
+function Edit({ person, searchDatabase, currRoute }) {
   const { name, title, img, _id } = person;
   const [show, setShow] = useState(false);
   const [newName, setNewName] = useState(name);
@@ -49,7 +49,7 @@ function Edit({ person, refreshDatabase }) {
       .put("http://localhost:3001/api/employees/" + _id, changedPerson)
       .then(() => {
         console.log("User successfully updated");
-        refreshDatabase();
+        searchDatabase(currRoute, "");
       })
       .catch((error) => console.error("Error:", error));
   };

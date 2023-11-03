@@ -39,14 +39,22 @@ app.get("/api/employees/:id", async (req, res) => {
   }
 });
 
-app.get("/api/search/:query", async (req, res) => {
-  const searchTerm = req.params.query;
+//get items based on ranking in mongodb
+app.get("/api/search/:category/:query", async (req, res) => {
+  const { category, query } = req.params;
+
+  const validCategories = ["executive", "mid", "junior"];
+
+  if (!validCategories.includes(category)) {
+    return res.status(400).json({ error: "Invalid category" });
+  }
 
   try {
+    const search = category + " " + query;
     const employees = await Employees.find({
       $or: [
-        { name: { $regex: searchTerm, $options: "i" } },
-        { title: { $regex: searchTerm, $options: "i" } },
+        { name: { $regex: query, $options: "i" } },
+        { title: { $regex: query, $options: "i" } },
       ],
     });
     res.json(employees);

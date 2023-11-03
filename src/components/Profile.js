@@ -27,7 +27,7 @@ const StyledDiv = styled.div`
   gap: 1rem;
 `;
 
-function Profile({ person, refreshDatabase }) {
+function Profile({ person, searchDatabase, currRoute }) {
   const { name, title, img, _id } = person;
 
   return (
@@ -37,8 +37,16 @@ function Profile({ person, refreshDatabase }) {
         <Card.Title style={{ textAlign: "center" }}>{name}</Card.Title>
         <Card.Text style={{ textAlign: "center" }}>{title}</Card.Text>
         <StyledDiv>
-          <Edit person={person} refreshDatabase={refreshDatabase} />
-          <Delete _id={_id} refreshDatabase={refreshDatabase} />
+          <Edit
+            person={person}
+            searchDatabase={searchDatabase}
+            currRoute={currRoute}
+          />
+          <Delete
+            _id={_id}
+            searchDatabase={searchDatabase}
+            currRoute={currRoute}
+          />
         </StyledDiv>
       </Card.Body>
     </StyledCard>
