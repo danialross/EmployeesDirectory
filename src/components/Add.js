@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Dropdown, DropdownButton } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -20,23 +20,29 @@ function Add({ searchDatabase, currRoute }) {
   const [show, setShow] = useState(false);
   const [isNameInvalid, setIsNameInvalid] = useState(false);
   const [isTitleInvalid, setIsTitleInvalid] = useState(false);
+  const [isLevelInvalid, setIsLevelInvalid] = useState(false);
 
   const [newName, setNewName] = useState("");
   const [newTitle, setNewTitle] = useState("");
   const [newPicture, setNewPicture] = useState("");
+  const [newLevel, setNewLevel] = useState("Select Level");
 
   const handleShow = () => setShow(true);
   const handleChangeName = (e) => setNewName(e.target.value);
   const handleChangeTitle = (e) => setNewTitle(e.target.value);
   const handleChangePicture = (e) => setNewPicture(e.target.value);
 
+  const levels = ["Executive", "Mid Management", "Junior"];
+
   const handleClose = () => {
     setNewName("");
     setNewTitle("");
     setNewPicture("");
+    setNewLevel("Select Level");
     setShow(false);
     setIsNameInvalid(false);
     setIsTitleInvalid(false);
+    setIsLevelInvalid(false);
   };
 
   const handleClick = () => {
@@ -52,7 +58,13 @@ function Add({ searchDatabase, currRoute }) {
       setIsTitleInvalid(false);
     }
 
-    if (newTitle === "" || newName === "") {
+    if (newLevel === "Select Level") {
+      setIsLevelInvalid(true);
+    } else {
+      setIsLevelInvalid(false);
+    }
+
+    if (newTitle === "" || newName === "" || newLevel === "Select Level") {
       return;
     }
 
@@ -68,10 +80,11 @@ function Add({ searchDatabase, currRoute }) {
     const newEmployee = {
       name: newName,
       title: newTitle,
-      img:
+      image:
         newPicture === ""
           ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/542px-Unknown_person.jpg"
           : newPicture,
+      level: newLevel,
     };
 
     axios
@@ -125,6 +138,24 @@ function Add({ searchDatabase, currRoute }) {
               id="input"
             />
             {isTitleInvalid ? <WarningText>Required</WarningText> : null}
+          </DivWithMargin>
+
+          <DivWithMargin>
+            <Form.Label htmlFor="url">Level</Form.Label>
+            <DropdownButton id="dropdown-basic-button" title={newLevel}>
+              {levels.map((option, index) => (
+                <Dropdown.Item
+                  key={index}
+                  onClick={() => {
+                    setNewLevel(option);
+                    console.log("level :" + newLevel);
+                  }}
+                >
+                  {option}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+            {isLevelInvalid ? <WarningText>Required</WarningText> : null}
           </DivWithMargin>
 
           <DivWithMargin>

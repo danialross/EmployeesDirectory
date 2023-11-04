@@ -28,11 +28,11 @@ const StyledDiv = styled.div`
 `;
 
 function Profile({ person, searchDatabase, currRoute }) {
-  const { name, title, img, _id } = person;
+  const { name, title, image, _id } = person;
 
   return (
     <StyledCard>
-      <StyledImage variant="top" src={img} />
+      <StyledImage variant="top" src={image} />
       <Card.Body>
         <Card.Title style={{ textAlign: "center" }}>{name}</Card.Title>
         <Card.Text style={{ textAlign: "center" }}>{title}</Card.Text>

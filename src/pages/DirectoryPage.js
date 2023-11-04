@@ -14,7 +14,7 @@ const StyledDiv = styled.div`
   padding-bottom: 1rem;
 `;
 
-function Home({ routes, currRoute }) {
+function DirectoryPage({ routes, currRoute }) {
   //for showing the display
   const [db, setDb] = useState([]);
 
@@ -40,7 +40,7 @@ function Home({ routes, currRoute }) {
   };
 
   useEffect(() => {
-    searchDatabase();
+    searchDatabase("/", "");
   }, []);
 
   return (
@@ -73,4 +73,4 @@ function Home({ routes, currRoute }) {
   );
 }
 
-export default Home;
+export default DirectoryPage;

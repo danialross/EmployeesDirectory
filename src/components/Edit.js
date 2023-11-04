@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Dropdown, DropdownButton } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -16,11 +16,14 @@ const ButtonWithMargin = styled(Button)`
 `;
 
 function Edit({ person, searchDatabase, currRoute }) {
-  const { name, title, img, _id } = person;
+  const { name, title, image, level, _id } = person;
   const [show, setShow] = useState(false);
   const [newName, setNewName] = useState(name);
   const [newTitle, setNewTitle] = useState(title);
-  const [newImage, setNewImage] = useState(img);
+  const [newImage, setNewImage] = useState(image);
+  const [newLevel, setNewLevel] = useState(level);
+
+  const levels = ["Executive", "Mid Management", "Junior"];
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -42,7 +45,8 @@ function Edit({ person, searchDatabase, currRoute }) {
       _id: _id,
       name: newName,
       title: newTitle,
-      img: newImage,
+      image: newImage,
+      level: newLevel,
     };
 
     axios
@@ -111,6 +115,15 @@ function Edit({ person, searchDatabase, currRoute }) {
               type="text"
               id="input"
             />
+
+            <Form.Label htmlFor="url">Level</Form.Label>
+            <DropdownButton id="dropdown-basic-button" title={newLevel}>
+              {levels.map((option, index) => (
+                <Dropdown.Item key={index} onClick={() => setNewLevel(option)}>
+                  {option}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
           </div>
         </Modal.Body>
         <Modal.Footer>

@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const employeeSchema = mongoose.Schema({
   name: String,
   title: String,
-  img: String,
-  index: Number,
+  image: String,
+  level: String,
 });
 
 module.exports = mongoose.model("Employees", employeeSchema);
