@@ -24,7 +24,6 @@ function DirectoryPage({ routes, currRoute }) {
 
         .get("http://localhost:3001/api/employees")
         .then((response) => {
-          console.log("search result : " + response.data);
           setDb(response.data);
         })
         .catch((error) => console.error("Error:", error));

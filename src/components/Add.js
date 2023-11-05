@@ -84,10 +84,8 @@ function Add({ searchDatabase, currRoute }) {
     }
 
     capitalizedName = capitalizedName.trim();
-    console.log(capitalizedName);
 
     capitalizedTitle = capitalizedTitle.trim();
-    console.log(capitalizedTitle);
 
     sendAddRequest(capitalizedName, capitalizedTitle);
     handleClose();
@@ -103,8 +101,6 @@ function Add({ searchDatabase, currRoute }) {
           : newPicture,
       level: newLevel,
     };
-
-    console.log(newEmployee);
 
     axios
       .post("http://localhost:3001/api/employees/", newEmployee)
@@ -163,13 +159,7 @@ function Add({ searchDatabase, currRoute }) {
             <Form.Label htmlFor="url">Level</Form.Label>
             <DropdownButton id="dropdown-basic-button" title={newLevel}>
               {levels.map((option, index) => (
-                <Dropdown.Item
-                  key={index}
-                  onClick={() => {
-                    setNewLevel(option);
-                    console.log("level :" + newLevel);
-                  }}
-                >
+                <Dropdown.Item key={index} onClick={() => setNewLevel(option)}>
                   {option}
                 </Dropdown.Item>
               ))}
