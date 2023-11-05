@@ -291,7 +291,8 @@ app.post("/api/employees", async (req, res) => {
   const newEmployee = new Employees({
     name: req.body.name,
     title: req.body.title,
-    img: req.body.img,
+    image: req.body.image,
+    level: req.body.level,
   });
 
   try {

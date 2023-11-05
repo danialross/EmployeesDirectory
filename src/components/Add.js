@@ -68,24 +68,43 @@ function Add({ searchDatabase, currRoute }) {
       return;
     }
 
-    const capitalizedFirst =
-      newName.charAt(0).toUpperCase + newName.substring(1);
-    console.log(capitalizedFirst);
+    const names = newName.split(" ");
+    const title = newTitle.split(" ");
 
+    let capitalizedName = "";
+    let capitalizedTitle = "";
+
+    for (const word of names) {
+      capitalizedName += word.charAt(0).toUpperCase() + word.substring(1) + " ";
+    }
+
+    for (const word of title) {
+      capitalizedTitle +=
+        word.charAt(0).toUpperCase() + word.substring(1) + " ";
+    }
+
+    capitalizedName = capitalizedName.trim();
+    console.log(capitalizedName);
+
+    capitalizedTitle = capitalizedTitle.trim();
+    console.log(capitalizedTitle);
+
+    sendAddRequest(capitalizedName, capitalizedTitle);
     handleClose();
-    sendAddRequest();
   };
 
-  const sendAddRequest = () => {
+  const sendAddRequest = (name, title) => {
     const newEmployee = {
-      name: newName,
-      title: newTitle,
+      name: name,
+      title: title,
       image:
         newPicture === ""
           ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/542px-Unknown_person.jpg"
           : newPicture,
       level: newLevel,
     };
+
+    console.log(newEmployee);
 
     axios
       .post("http://localhost:3001/api/employees/", newEmployee)
