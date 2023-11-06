@@ -81,12 +81,43 @@ function TopBar({ routes, currRoute, searchDatabase }) {
     <StyledNav>
       <StyledContainer>
         <Nav>
-          <StyledLink to={routes[0].path} exact>
+          <StyledLink
+            to={routes[0].path}
+            onClick={() => {
+              searchDatabase(routes[0].path, "");
+              setInput("");
+            }}
+            exact
+          >
             {routes[0].title}
           </StyledLink>
-          <StyledLink to={routes[1].path}>{routes[1].title}</StyledLink>
-          <StyledLink to={routes[2].path}>{routes[2].title}</StyledLink>
-          <StyledLink to={routes[3].path}>{routes[3].title}</StyledLink>
+          <StyledLink
+            to={routes[1].path}
+            onClick={() => {
+              searchDatabase(routes[1].path, "");
+              setInput("");
+            }}
+          >
+            {routes[1].title}
+          </StyledLink>
+          <StyledLink
+            to={routes[2].path}
+            onClick={() => {
+              searchDatabase(routes[2].path, "");
+              setInput("");
+            }}
+          >
+            {routes[2].title}
+          </StyledLink>
+          <StyledLink
+            to={routes[3].path}
+            onClick={() => {
+              searchDatabase(routes[3].path, "");
+              setInput("");
+            }}
+          >
+            {routes[3].title}
+          </StyledLink>
         </Nav>
       </StyledContainer>
 

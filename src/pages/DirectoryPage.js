@@ -27,10 +27,27 @@ function DirectoryPage({ routes, currRoute }) {
           setDb(response.data);
         })
         .catch((error) => console.error("Error:", error));
+    } else if (
+      (currRoute === "/executive" ||
+        currRoute === "/mid" ||
+        currRoute === "/junior") &&
+      input.length === 0
+    ) {
+      axios
+        .get("http://localhost:3001/api/search" + currRoute)
+        .then((response) => {
+          console.log("http://localhost:3001/api/search" + currRoute);
+          console.log("search result : " + response.data);
+          setDb(response.data);
+        })
+        .catch((error) => console.error("Error:", error));
     } else {
       axios
         .get("http://localhost:3001/api/search" + currRoute + "/" + input)
         .then((response) => {
+          console.log(
+            "http://localhost:3001/api/search" + currRoute + "/" + input
+          );
           console.log("search result : " + response.data);
           setDb(response.data);
         })

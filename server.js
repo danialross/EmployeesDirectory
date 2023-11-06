@@ -232,7 +232,7 @@ app.use(express.urlencoded());
 // }
 // clearDatabase();
 
-//get all items in mongodb
+//get all items
 app.get("/api/employees", async (req, res) => {
   try {
     const employees = await Employees.find();
@@ -244,6 +244,80 @@ app.get("/api/employees", async (req, res) => {
   }
 });
 
+//get items based on levels only
+app.get("/api/search/:level", async (req, res) => {
+  const { level } = req.params;
+  console.log("level : " + level);
+
+  let tier = "";
+  const validCategories = ["Executive", "Mid Management", "Junior"];
+
+  if (level === "executive") {
+    tier = validCategories[0];
+  } else if (level === "mid") {
+    tier = validCategories[1];
+  } else if (level === "junior") {
+    tier = validCategories[2];
+  }
+
+  if (!validCategories.includes(tier)) {
+    return res.status(400).json({ error: "Invalid level" });
+  }
+
+  try {
+    const employees = await Employees.find({
+      level: tier,
+    });
+    console.log("Database filtered using levels only sent");
+    res.json(employees);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+//get items based on levels and search bar
+app.get("/api/search/:level/:query", async (req, res) => {
+  const { level, query } = req.params;
+  console.log("level : " + level);
+  console.log("query : " + query);
+
+  let tier = "";
+  const validCategories = ["Executive", "Mid Management", "Junior"];
+
+  if (level === "executive") {
+    tier = validCategories[0];
+  } else if (level === "mid") {
+    tier = validCategories[1];
+  } else if (level === "junior") {
+    tier = validCategories[2];
+  }
+
+  if (!validCategories.includes(tier)) {
+    return res.status(400).json({ error: "Invalid level" });
+  }
+
+  try {
+    const employees = await Employees.find({
+      $and: [
+        { level: tier }, // Condition 1: User level
+        {
+          $or: [
+            { name: { $regex: query, $options: "i" } }, // Case-insensitive regex search for name
+            { title: { $regex: query, $options: "i" } }, // Case-insensitive regex search for title
+          ], // Condition 2: match name or title
+        },
+      ],
+    });
+    console.log("Database filtered using levels and query sent");
+    res.json(employees);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+//testing
 //checking if item exist
 app.get("/api/employees/:id", async (req, res) => {
   const employeeId = req.params.id;
@@ -258,31 +332,6 @@ app.get("/api/employees/:id", async (req, res) => {
   } catch (e) {
     console.log(e.message);
     res.status(500).send({ error: e.message });
-  }
-});
-
-//get items based on ranking in mongodb
-app.get("/api/search/:category/:query", async (req, res) => {
-  const { category, query } = req.params;
-
-  const validCategories = ["executive", "mid", "junior"];
-
-  if (!validCategories.includes(category)) {
-    return res.status(400).json({ error: "Invalid category" });
-  }
-
-  try {
-    const search = category + " " + query;
-    const employees = await Employees.find({
-      $or: [
-        { name: { $regex: query, $options: "i" } },
-        { title: { $regex: query, $options: "i" } },
-      ],
-    });
-    res.json(employees);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: e.message });
   }
 });
 
