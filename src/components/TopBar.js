@@ -77,6 +77,20 @@ function TopBar({ routes, currRoute, searchDatabase }) {
     }
   };
 
+  const resetSearch = (path, currPath, isFromLink) => {
+    if (isFromLink === true) {
+      if (path !== currPath) {
+        searchDatabase(path, "");
+        setInput("");
+      }
+    } else {
+      if (input.length !== 0) {
+        searchDatabase(path, "");
+        setInput("");
+      }
+    }
+  };
+
   return (
     <StyledNav>
       <StyledContainer>
@@ -84,8 +98,7 @@ function TopBar({ routes, currRoute, searchDatabase }) {
           <StyledLink
             to={routes[0].path}
             onClick={() => {
-              searchDatabase(routes[0].path, "");
-              setInput("");
+              resetSearch(routes[0].path, currRoute, true);
             }}
             exact
           >
@@ -94,8 +107,7 @@ function TopBar({ routes, currRoute, searchDatabase }) {
           <StyledLink
             to={routes[1].path}
             onClick={() => {
-              searchDatabase(routes[1].path, "");
-              setInput("");
+              resetSearch(routes[1].path, currRoute, true);
             }}
           >
             {routes[1].title}
@@ -103,8 +115,7 @@ function TopBar({ routes, currRoute, searchDatabase }) {
           <StyledLink
             to={routes[2].path}
             onClick={() => {
-              searchDatabase(routes[2].path, "");
-              setInput("");
+              resetSearch(routes[2].path, currRoute, true);
             }}
           >
             {routes[2].title}
@@ -112,8 +123,7 @@ function TopBar({ routes, currRoute, searchDatabase }) {
           <StyledLink
             to={routes[3].path}
             onClick={() => {
-              searchDatabase(routes[3].path, "");
-              setInput("");
+              resetSearch(routes[3].path, currRoute, true);
             }}
           >
             {routes[3].title}
@@ -139,8 +149,7 @@ function TopBar({ routes, currRoute, searchDatabase }) {
       </StyledButton>
       <Button
         onClick={() => {
-          searchDatabase(currRoute, "");
-          setInput("");
+          resetSearch(currRoute, currRoute, false);
         }}
         variant="secondary"
       >

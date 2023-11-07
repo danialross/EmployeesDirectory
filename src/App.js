@@ -29,38 +29,19 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={routes[0].path}
-          element={
-            <Banner title={routes[0].title}>
-              <DirectoryPage routes={routes} currRoute={routes[0].path} />
-            </Banner>
-          }
-        />
-        <Route
-          path={routes[1].path}
-          element={
-            <Banner title={routes[1].title}>
-              <DirectoryPage routes={routes} currRoute={routes[1].path} />
-            </Banner>
-          }
-        />
-        <Route
-          path={routes[2].path}
-          element={
-            <Banner title={routes[2].title}>
-              <DirectoryPage routes={routes} currRoute={routes[2].path} />
-            </Banner>
-          }
-        />
-        <Route
-          path={routes[3].path}
-          element={
-            <Banner title={routes[3].title}>
-              <DirectoryPage routes={routes} currRoute={routes[3].path} />
-            </Banner>
-          }
-        />
+        {routes.map((route, index) => {
+          return (
+            <Route
+              index={index}
+              path={route.path}
+              element={
+                <Banner title={route.title}>
+                  <DirectoryPage routes={routes} currRoute={route.path} />
+                </Banner>
+              }
+            />
+          );
+        })}
       </Routes>
     </BrowserRouter>
   );

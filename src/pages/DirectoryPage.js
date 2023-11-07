@@ -78,6 +78,7 @@ function DirectoryPage({ routes, currRoute }) {
         currRoute={currRoute}
       />
       <StyledDiv>
+        <Add searchDatabase={searchDatabase} currRoute={currRoute} />
         {db.length !== 0 ? (
           db.map((person) => {
             return (
@@ -92,9 +93,6 @@ function DirectoryPage({ routes, currRoute }) {
         ) : (
           <Missing />
         )}
-      </StyledDiv>
-      <StyledDiv>
-        <Add searchDatabase={searchDatabase} currRoute={currRoute} />
       </StyledDiv>
     </>
   );

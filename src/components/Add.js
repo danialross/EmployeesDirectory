@@ -4,8 +4,16 @@ import styled from "styled-components";
 import axios from "axios";
 
 const StyledButton = styled(Button)`
-  width: 12rem;
-  height: 4rem;
+  background-color: #ffffff;
+  font-size: 5rem;
+  font-family:
+    Varela Round,
+    sans-serif;
+  width: 18rem;
+  height: 21rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem;
 `;
 
 const DivWithMargin = styled.div`
@@ -115,8 +123,8 @@ function Add({ searchDatabase, currRoute }) {
 
   return (
     <>
-      <StyledButton variant="primary" onClick={handleShow}>
-        + Add New Employee
+      <StyledButton variant="outline-primary" onClick={handleShow}>
+        +
       </StyledButton>
 
       <Modal
