@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Banner from "./components/Banner";
 import DirectoryPage from "./pages/DirectoryPage";
+import Footer from "./components/Footer";
 
 function App() {
   const routes = [
@@ -37,6 +38,7 @@ function App() {
               element={
                 <Banner title={route.title}>
                   <DirectoryPage routes={routes} currRoute={route.path} />
+                  <Footer />
                 </Banner>
               }
             />
