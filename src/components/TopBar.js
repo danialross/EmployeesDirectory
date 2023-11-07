@@ -139,7 +139,8 @@ function TopBar({ routes, currRoute, searchDatabase }) {
       </StyledButton>
       <Button
         onClick={() => {
-          searchDatabase(currRoute, input);
+          searchDatabase(currRoute, "");
+          setInput("");
         }}
         variant="secondary"
       >
