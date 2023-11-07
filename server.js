@@ -232,6 +232,26 @@ app.use(express.urlencoded());
 // }
 // clearDatabase();
 
+//get all items using search query
+app.get("/api/employees/:query", async (req, res) => {
+  const query = req.params.query;
+  try {
+    const result = await Employees.find({
+      $or: [
+        { name: { $regex: query, $options: "i" } }, // Case-insensitive regex search for name
+        { title: { $regex: query, $options: "i" } }, // Case-insensitive regex search for title
+      ],
+    });
+
+    res.send(result);
+
+    console.log({ Employee: result });
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).send({ error: e.message });
+  }
+});
+
 //get all items
 app.get("/api/employees", async (req, res) => {
   try {
@@ -244,56 +264,15 @@ app.get("/api/employees", async (req, res) => {
   }
 });
 
-//get items based on levels only
-app.get("/api/search/:level", async (req, res) => {
-  const { level } = req.params;
-  console.log("level : " + level);
-
-  let tier = "";
-  const validCategories = ["Executive", "Mid Management", "Junior"];
-
-  if (level === "executive") {
-    tier = validCategories[0];
-  } else if (level === "mid") {
-    tier = validCategories[1];
-  } else if (level === "junior") {
-    tier = validCategories[2];
-  }
-
-  if (!validCategories.includes(tier)) {
-    return res.status(400).json({ error: "Invalid level" });
-  }
-
-  try {
-    const employees = await Employees.find({
-      level: tier,
-    });
-    console.log("Database filtered using levels only sent");
-    res.json(employees);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: e.message });
-  }
-});
-
-//get items based on levels and search bar
+//get items based on levels and search query
 app.get("/api/search/:level/:query", async (req, res) => {
   const { level, query } = req.params;
   console.log("level : " + level);
   console.log("query : " + query);
 
-  let tier = "";
-  const validCategories = ["Executive", "Mid Management", "Junior"];
+  const tier = convertLevelToPath(level);
 
-  if (level === "executive") {
-    tier = validCategories[0];
-  } else if (level === "mid") {
-    tier = validCategories[1];
-  } else if (level === "junior") {
-    tier = validCategories[2];
-  }
-
-  if (!validCategories.includes(tier)) {
+  if (tier === "invalid") {
     return res.status(400).json({ error: "Invalid level" });
   }
 
@@ -317,21 +296,44 @@ app.get("/api/search/:level/:query", async (req, res) => {
   }
 });
 
-//testing
-//checking if item exist
-app.get("/api/employees/:id", async (req, res) => {
-  const employeeId = req.params.id;
+// convert level to path and 'invalid' if not
+function convertLevelToPath(level) {
+  let tier = "";
+  const validCategories = ["Executive", "Mid Management", "Junior"];
+
+  if (level === "executive") {
+    tier = validCategories[0];
+  } else if (level === "mid") {
+    tier = validCategories[1];
+  } else if (level === "junior") {
+    tier = validCategories[2];
+  } else {
+    tier = "invalid";
+  }
+
+  return tier;
+}
+
+//get all items at specific levels
+app.get("/api/search/:level", async (req, res) => {
+  const { level } = req.params;
+  console.log("level : " + level);
+
+  const tier = convertLevelToPath(level);
+
+  if (tier === "invalid") {
+    return res.status(400).json({ error: "Invalid level" });
+  }
+
   try {
-    const result = await Employees.findById(employeeId);
-    if (result) {
-      res.send(result);
-    } else if (!result) {
-      res.status(404).send("Employee does not exist");
-    }
-    console.log({ Employee: result });
+    const employees = await Employees.find({
+      level: tier,
+    });
+    console.log("Database filtered using levels only sent");
+    res.json(employees);
   } catch (e) {
-    console.log(e.message);
-    res.status(500).send({ error: e.message });
+    console.error(e);
+    res.status(500).json({ error: e.message });
   }
 });
 
