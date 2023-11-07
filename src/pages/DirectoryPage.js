@@ -5,6 +5,7 @@ import TopBar from "../components/TopBar";
 import styled from "styled-components";
 import axios from "axios";
 import Missing from "../components/Missing";
+import { Button } from "react-bootstrap";
 
 //styling
 const StyledDiv = styled.div`
@@ -13,6 +14,18 @@ const StyledDiv = styled.div`
   justify-content: center;
   padding-bottom: 1rem;
 `;
+
+const StyledButton = styled(Button)`
+  margin-top: -0.5rem;
+  width: 11rem;
+  height: 3rem;
+`;
+const handleClick = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 
 function DirectoryPage({ routes, currRoute }) {
   //for showing the display
@@ -93,6 +106,11 @@ function DirectoryPage({ routes, currRoute }) {
         ) : (
           <Missing />
         )}
+      </StyledDiv>
+      <StyledDiv>
+        <StyledButton variant="primary" onClick={handleClick}>
+          Back to Top
+        </StyledButton>
       </StyledDiv>
     </>
   );
