@@ -19,39 +19,50 @@ function DirectoryPage({ routes, currRoute }) {
   const [db, setDb] = useState([]);
 
   const searchDatabase = (currRoute, input) => {
-    if (currRoute === "/") {
-      axios
-
-        .get("http://localhost:3001/api/employees")
-        .then((response) => {
-          setDb(response.data);
-        })
-        .catch((error) => console.error("Error:", error));
-    } else if (
-      (currRoute === "/executive" ||
+    try {
+      if (currRoute === "/") {
+        if (input === "") {
+          axios
+            .get("http://localhost:3001/api/employees")
+            .then((response) => {
+              setDb(response.data);
+            })
+            .catch((error) => console.error("Error:", error));
+        } else {
+          axios
+            .get("http://localhost:3001/api/employees/" + input)
+            .then((response) => {
+              setDb(response.data);
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+      } else if (
+        currRoute === "/executive" ||
         currRoute === "/mid" ||
-        currRoute === "/junior") &&
-      input.length === 0
-    ) {
-      axios
-        .get("http://localhost:3001/api/search" + currRoute)
-        .then((response) => {
-          console.log("http://localhost:3001/api/search" + currRoute);
-          console.log("search result : " + response.data);
-          setDb(response.data);
-        })
-        .catch((error) => console.error("Error:", error));
-    } else {
-      axios
-        .get("http://localhost:3001/api/search" + currRoute + "/" + input)
-        .then((response) => {
-          console.log(
-            "http://localhost:3001/api/search" + currRoute + "/" + input
-          );
-          console.log("search result : " + response.data);
-          setDb(response.data);
-        })
-        .catch((error) => console.error("Error:", error));
+        currRoute === "/junior"
+      ) {
+        if (input.length === 0) {
+          axios
+            .get("http://localhost:3001/api/search" + currRoute)
+            .then((response) => {
+              console.log("http://localhost:3001/api/search" + currRoute);
+              setDb(response.data);
+            })
+            .catch((error) => console.error("Error:", error));
+        } else {
+          axios
+            .get("http://localhost:3001/api/search" + currRoute + "/" + input)
+            .then((response) => {
+              console.log(
+                "http://localhost:3001/api/search" + currRoute + "/" + input
+              );
+              setDb(response.data);
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+      }
+    } catch (e) {
+      console.error("error : " + e);
     }
   };
 
