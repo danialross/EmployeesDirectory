@@ -22,8 +22,8 @@ const StyledForm = styled(Form.Control)`
   font-family:
     Varela Round,
     sans-serif;
-  width: 16rem;
-  margin-right: -2rem;
+  width: 23rem;
+  margin-right: -1.7rem;
   display: flex;
   align-items: center;
 `;
